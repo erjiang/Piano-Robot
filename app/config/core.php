@@ -313,3 +313,11 @@
  */
 	Configure::write('PDFCache.max_size', 512);
 	Configure::write('PDFCache.expiry', 30);
+
+/**
+ * Settings to control the default display options of the PDF images
+ */
+	Configure::write('PDFDisplay.height', 1024);
+	// note that this DPI controls how GhostScript renders the PDF,
+	// not the final size of the rasterized image
+	Configure::write('PDFDisplay.dpi', 300);

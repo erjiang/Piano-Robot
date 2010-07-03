@@ -7,6 +7,7 @@ if(!is_file($pdfpath)) {
 	exit;
 }
 header("Content-type: image/png");
-passthru(sprintf('convert -density 300 -crop 100%%x20%%+0+0 "%s"[%d] -type Grayscale -resize 600x120 png:-', $pdfpath, $page - 1));
+passthru(sprintf('convert -density %d -crop 100%%x20%%+0+0 "%s"[%d] -type Grayscale -resize 600x120 png:-',
+	Configure::read('PDFDisplay.dpi'), $pdfpath, $page - 1));
 
  ?>

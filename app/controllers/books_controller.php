@@ -15,7 +15,35 @@ class BooksController extends AppController {
 		}
 		$this->set('book', $this->Book->read(null, $id));
 	}
-	function page($height = null) {
+	function read($id = null) {
+		if(!$id) {
+			$this->Session->setFlash(__('Invalid book', true));
+			$this->redirect(array('action' => 'index'));
+		}
+		$this->set('book', $this->Book->read(null, $id));
+	}
+	function page($id = null, $page = null, $height = null) {
+		$this->layout = 'image';
+		if (!$id) {
+			$this->Session->setFlash(__('Invalid book', true));
+			$this->redirect(array('action' => 'index'));
+			return;
+		}
+		if (!$page) {
+			$this->Session->setFlash(__('No page specified', true));
+			$this->redirect(array('action' => 'index'));
+			return;
+		}
+		$book =  $this->Book->read(null, $id);
+		if($page > $book['Book']['length'] || $page < 0) {
+			$this->Session->setFlash(__('Invalid page number', true));
+			$this->redirect(array('action' => 'index'));
+			return;
+		}
+
+		$this->set('book', $book);
+		$this->set('page', $page);
+		$this->set('height', $height);
 	}
 
 	function pageheader($id = null, $page = null, $width = null, $height = null) {
