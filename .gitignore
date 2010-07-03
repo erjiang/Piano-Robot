@@ -1,4 +1,4 @@
 /app/config/database.php
-/app/pdfstore/
+/app/pdfstore/*
 /app/tmp/cache/persistent/
 /app/tmp/cache/models/
