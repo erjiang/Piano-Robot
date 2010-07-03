@@ -15,6 +15,33 @@ class BooksController extends AppController {
 		}
 		$this->set('book', $this->Book->read(null, $id));
 	}
+	function page($height = null) {
+	}
+
+	function pageheader($id = null, $page = null, $width = null, $height = null) {
+		$this->layout = 'image';
+		if (!$id) {
+			$this->Session->setFlash(__('Invalid book', true));
+			$this->redirect(array('action' => 'index'));
+			return;
+		}
+		if (!$page) {
+			$this->Session->setFlash(__('No page specified', true));
+			$this->redirect(array('action' => 'index'));
+			return;
+		}
+		$book =  $this->Book->read(null, $id);
+		if($page > $book['Book']['length'] || $page < 0) {
+			$this->Session->setFlash(__('Invalid page number', true));
+			$this->redirect(array('action' => 'index'));
+			return;
+		}
+
+		$this->set('book', $book);
+		$this->set('page', $page);
+		$this->set('width', $width);
+		$this->set('height', $height);
+	}
 
 	function add() {
 		if (!empty($this->data)) {
@@ -60,6 +87,9 @@ class BooksController extends AppController {
 			 */
 			$md5sum = md5_file($this->data['Book']['pdf']['tmp_name']);
 			$initial = substr($md5sum, 0, 1);
+			// do a page count
+			exec('identify '.$this->data['Book']['pdf']['tmp_name'], $output);
+			$this->data['Book']['length'] = count($output);
 			$fullname = sprintf('%s%s/%s.pdf', PDF_STORE, $initial, $md5sum);
 			if(file_exists(PDF_STORE . $initial . '/' . $md5sum . '.pdf')) {
 				$this->Session->setFlash(__('This file already exists', true));
