@@ -300,3 +300,16 @@
  *
  */
 	Cache::config('default', array('engine' => 'File'));
+
+/*
+ * Global constants for our paths
+ */
+	define ('PDF_STORE', APP . 'pdfstore/');
+
+/**
+ * Settings to control the size of the PDF image cache
+ * max_size controls how large the cache can grow (in MB) before pruning
+ * expiry controls how old (in days) files can 
+ */
+	Configure::write('PDFCache.max_size', 512);
+	Configure::write('PDFCache.expiry', 30);

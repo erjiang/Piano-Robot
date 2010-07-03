@@ -1,16 +1,19 @@
 <div class="books form">
-<?php echo $this->Form->create('Book');?>
+<?php echo $this->Form->create('Book',
+		array('type'=>'file'));?>
 	<fieldset>
  		<legend><?php __('Add Book'); ?></legend>
 	<?php
 		echo $this->Form->input('title');
 		echo $this->Form->input('editor');
 		echo $this->Form->input('publisher');
-		echo $this->Form->input('file', array('type'=>'file'));
+		echo $this->Form->input('pdf', array('type'=>'file'));
 		echo $this->Form->input('access',
-			array('type'=>'radio','options'=>array(
+			array('type'=>'radio',
+				'default'=>1,
+				'options'=>array(
 				'0'=>'Open access',
-				'1'=>'Gold membership access')));
+				'1'=>'Gold membership required')));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit', true));?>
