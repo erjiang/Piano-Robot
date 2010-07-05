@@ -2,6 +2,7 @@
 class BooksController extends AppController {
 
 	var $name = 'Books';
+	var $helpers = array('Html', 'Form');
 
 	function index() {
 		$this->Book->recursive = 0;
@@ -16,6 +17,7 @@ class BooksController extends AppController {
 		$this->set('book', $this->Book->read(null, $id));
 	}
 	function read($id = null) {
+		$this->layout = 'reading';
 		if(!$id) {
 			$this->Session->setFlash(__('Invalid book', true));
 			$this->redirect(array('action' => 'index'));
