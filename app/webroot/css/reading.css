@@ -1,0 +1,21 @@
+/*
+ * Reading layout meant to maximize viewable area
+ * and minimize distractions.
+ */
+body, #container {
+	width: 100%;
+	margin:0;
+}
+body {
+	background-color:black;
+}
+#content {
+	text-align: center;
+	overflow:hidden;
+}
+#content #pageNumber {
+	width: 3em;
+}
+img.page {
+	border:1px solid black;
+}

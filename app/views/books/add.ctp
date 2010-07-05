@@ -1,3 +1,37 @@
+<script type="text/javascript">
+$(document).ready(function () {
+	$("#BookPdf").change(function () {
+		// only continue if the user hasn't already filled anything in
+		if($("#BookTitle").value || $("#BookCreator").value) {
+			console.log("Fields already filled.");
+			return;
+		}
+
+		/*
+		 * Try to fill in the title and creator name from the filename
+		 * in the form "Creator - Title.pdf"
+		 */
+		String.prototype.endsWith = function(str)
+			{return (this.match(str+"$")==str)};
+			
+		var filename = this.value;
+		if(!filename.endsWith('.pdf')) {
+			console.log("Not a PDF.");
+			return;
+		}
+		filename = filename.substring(0, filename.length - 4);
+		if(filename.indexOf(' - ') == -1) {
+			$("#BookTitle").val(filename);
+		} else {
+			var dashIndex = filename.indexOf(' - ');
+			var creator = filename.substring(0, dashIndex);
+			var title = filename.substr(dashIndex + 3);
+			$("#BookTitle").val(title);
+			$("#BookCreator").val(creator);
+		}
+	});
+});
+</script>
 <div class="books form">
 <?php echo $this->Form->create('Book',
 		array('type'=>'file'));?>
@@ -5,7 +39,7 @@
  		<legend><?php __('Add Book'); ?></legend>
 	<?php
 		echo $this->Form->input('title');
-		echo $this->Form->input('editor');
+		echo $this->Form->input('creator');
 		echo $this->Form->input('publisher');
 		echo $this->Form->input('pdf', array('type'=>'file'));
 		echo $this->Form->input('access',
