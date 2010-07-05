@@ -1,11 +1,13 @@
-**
-This software is not ready for use!
-**
+ * This software is not ready for use!
 
-What is Piano Robot?
+ * What is Piano Robot?
 
 Piano Robot is meant to be a fast, web-based sheet music browser.  It replaces the role of Adobe Reader while still storing the scores in their original PDF form.  There is an emphasis on fast access and browsing.  It is NOT meant to be a library or archival system.
 
-What is it built on?
+ * What is it built on?
 
 CakePHP for the web application parts, jQuery for presentation, MySQL for the backend, and ImageMagick+Ghostscript for the PDF-to-image conversion.
+
+ * What works right now?
+
+Right now, you can add PDFs and view them two-up with very few options.
