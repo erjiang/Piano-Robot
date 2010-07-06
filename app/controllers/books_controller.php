@@ -118,12 +118,6 @@ class BooksController extends AppController {
 			$md5sum = md5_file($this->data['Book']['pdf']['tmp_name']);
 			$initial = substr($md5sum, 0, 1);
 			// do a page count
-			/*
-			 * Let's not use `identify` to count PDFs because it has to
-			 * make ghostscript crunch through the whole PDF (CPU-intensive)
-			exec('identify '.$this->data['Book']['pdf']['tmp_name'], $output);
-			$this->data['Book']['length'] = count($output);
-			 */
 			$this->data['Book']['length'] = 
 				$this->countPDF($this->data['Book']['pdf']['tmp_name']);
 			$fullname = sprintf('%s%s/%s.pdf', PDF_STORE, $initial, $md5sum);
@@ -151,7 +145,7 @@ class BooksController extends AppController {
 				 * Push the user on to define scores within the book
 				 */
 				$this->Session->setFlash(__('The book has been saved', true));
-				$this->redirect(array('action' => 'define'));
+				$this->redirect(array('action' => 'add'));
 			} else {
 				$this->Session->setFlash(__('The book could not be saved. Please, try again.', true));
 			}
@@ -192,62 +186,25 @@ class BooksController extends AppController {
 		$this->Session->setFlash(__('Book was not deleted', true));
 		$this->redirect(array('action' => 'index'));
 	}
-	function admin_index() {
-		$this->Book->recursive = 0;
-		$this->set('books', $this->paginate());
-	}
 
-	function admin_view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid book', true));
-			$this->redirect(array('action' => 'index'));
-		}
-		$this->set('book', $this->Book->read(null, $id));
-	}
-
-	function admin_add() {
-		if (!empty($this->data)) {
-			$this->Book->create();
-			if ($this->Book->save($this->data)) {
-				$this->Session->setFlash(__('The book has been saved', true));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The book could not be saved. Please, try again.', true));
-			}
-		}
-	}
-
-	function admin_edit($id = null) {
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid book', true));
-			$this->redirect(array('action' => 'index'));
-		}
-		if (!empty($this->data)) {
-			if ($this->Book->save($this->data)) {
-				$this->Session->setFlash(__('The book has been saved', true));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The book could not be saved. Please, try again.', true));
-			}
-		}
-		if (empty($this->data)) {
-			$this->data = $this->Book->read(null, $id);
-		}
-	}
-
-	function admin_delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for book', true));
-			$this->redirect(array('action'=>'index'));
-		}
-		if ($this->Book->delete($id)) {
-			$this->Session->setFlash(__('Book deleted', true));
-			$this->redirect(array('action'=>'index'));
-		}
-		$this->Session->setFlash(__('Book was not deleted', true));
-		$this->redirect(array('action' => 'index'));
-	}
+	/*
+	 * Let's not use `identify` to count PDFs because it has to
+	 * make ghostscript crunch through the whole PDF (CPU-intensive)
+	 *
+	 * Try the pure-PHP solution first, and if it returns 0, then try
+	 * using identify.
+	 */
 	public function countPDF($file) {
+		$pages = $this->countPDFPHP($file);
+		return ($pages == 0) ? $this->countPDFIdentify($file) : $pages;
+	}
+	
+	public function countPDFIdentify($file) {
+		exec('identify '.$this->data['Book']['pdf']['tmp_name'], $output);
+		return count($output);
+	}
+
+	public function countPDFPHP($file) {
 		//where $file is the full path to your PDF document.
 		if(file_exists($file)) {
 			//open the file for reading

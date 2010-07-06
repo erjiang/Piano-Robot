@@ -1,6 +1,6 @@
 <?php
-class Score extends AppModel {
-	var $name = 'Score';
+class Piece extends AppModel {
+	var $name = 'Piece';
 	var $displayField = 'title';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
@@ -15,9 +15,9 @@ class Score extends AppModel {
 	);
 
 	var $hasMany = array(
-		'Metadatum' => array(
-			'className' => 'Metadatum',
-			'foreignKey' => 'score_id',
+		'PieceMetadatum' => array(
+			'className' => 'PieceMetadatum',
+			'foreignKey' => 'piece_id',
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',

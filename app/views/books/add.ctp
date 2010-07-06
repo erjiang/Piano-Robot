@@ -40,7 +40,7 @@ $(document).ready(function () {
 	<?php
 		echo $this->Form->input('title');
 		echo $this->Form->input('creator');
-		echo $this->Form->input('publisher');
+		echo $this->Form->input('edition');
 		echo $this->Form->input('pdf', array('type'=>'file'));
 		echo $this->Form->input('access',
 			array('type'=>'radio',
