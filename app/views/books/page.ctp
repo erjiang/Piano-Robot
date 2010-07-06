@@ -22,7 +22,7 @@ header("Content-type: image/png");
  * Check if the needed file already exists
  */
 if(!is_file($imagename)) {
-	passthru(sprintf('convert -density %d "%s"[%d] -type Grayscale -resize %dx%d "%s"',
+	passthru(sprintf('convert -define pdf:use-cropbox=true -density %d "%s"[%d] -type Grayscale -resize %dx%d "%s"',
 		Configure::read('PDFDisplay.dpi'),
 		$pdfpath,
 		$page - 1,
