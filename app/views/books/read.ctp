@@ -51,9 +51,6 @@ function changePages() {
 
 }
 
-function setLoading() {
-}
-
 function nextPage () {
 	currentPage -= 2;
 	if(currentPage < 1) {
