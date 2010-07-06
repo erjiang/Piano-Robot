@@ -18,8 +18,7 @@ $id = $book['Book']['id'];
 
 <img id="right" class="books page"
 	src="/books/page/<?php echo $id; ?>/2/<?php echo $height; ?>" />
-
-<script style="text/javascript">
+<script type="text/javascript">
 var currentPage = <?php echo $page; ?>;
 var height = <?php echo $height; ?>;
 var id = <?php echo $id; ?>;
@@ -31,44 +30,74 @@ function makeOdd(number) {
 	return number;
 }
 function changePages() {
+	$("#left").css({'opacity': 0.3});
+	$("#right").css({'opacity': 0.3});
+	$("#left").bind('load', function (e) {
+		$(this).css({'opacity': 1.0});
+	});
+	$("#right").bind('load', function (e) {
+		$(this).css({'opacity': 1.0});
+	});
+
 	$("#left").attr("src","/books/page/"+id+"/"+currentPage+"/"+height);
 	if(currentPage < maxPage) {
+		$("#right").show();
 		$("#right").attr("src","/books/page/"+id+"/"+(currentPage+1)+"/"+height);
-		$("#right").css({'display':'inline'});
 	} else {
-		$("#right").css({'display':'none'});
+		$("#right").hide();
+		$("#right").removeAttr("src");
 	}
 	$("#pageNumber").val(currentPage);
-	setLoading();
+
 }
 
 function setLoading() {
-	$("#left").load(function () {
-		$(this).css({'opacity': 1.0});
-	});
-	$("#right").load(function () {
-		$(this).css({'opacity': 1.0});
-	});
-	$("#left").css({'opacity': 0.3});
-	$("#right").css({'opacity': 0.3});
+}
+
+function nextPage () {
+	currentPage -= 2;
+	if(currentPage < 1) {
+		currentPage = 1;
+	}
+	currentPage = makeOdd(currentPage);
+	changePages();
+}
+
+function prevPage () {
+	currentPage += 2;
+	if(currentPage > maxPage) {
+		currentPage = maxPage;
+	}
+	currentPage = makeOdd(currentPage);
+	changePages();
 }
 
 $(document).ready(function () {
 	$("#prevPage").click(function () {
-		currentPage -= 2;
-		if(currentPage < 1) {
-			currentPage = 1;
-		}
-		currentPage = makeOdd(currentPage);
-		changePages();
+		nextPage();
 	});
 	$("#nextPage").click(function () {
-		currentPage += 2;
-		if(currentPage > maxPage) {
-			currentPage = maxPage;
-		}
-		currentPage = makeOdd(currentPage);
-		changePages();
+		prevPage();
 	});
+});
+
+$(document).keydown(function (e) {
+	switch (e.keyCode) {
+		case 40:
+			alert('down');
+			break;
+		case 38:
+			alert('up');
+			break;
+		case 37: // right arrow
+		case 34: // page down
+			nextPage();
+			break;
+		case 39: // left arrow
+		case 33: // page up
+			prevPage();
+			break;
+		default:
+	}
 });
 </script>
