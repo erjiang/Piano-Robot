@@ -1,13 +1,13 @@
 <?php
-class Metadatum extends AppModel {
-	var $name = 'Metadatum';
+class BookMetadatum extends AppModel {
+	var $name = 'BookMetadatum';
 	var $displayField = 'key';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 	var $belongsTo = array(
-		'Score' => array(
-			'className' => 'Score',
-			'foreignKey' => 'score_id',
+		'Book' => array(
+			'className' => 'Book',
+			'foreignKey' => 'book_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''

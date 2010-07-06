@@ -6,7 +6,7 @@
 		echo $this->Form->input('id');
 		echo $this->Form->input('title');
 		echo $this->Form->input('creator');
-		echo $this->Form->input('publisher');
+		echo $this->Form->input('edition');
 		echo $this->Form->input('access',
 			array('type'=>'radio',
 				'default'=>1,

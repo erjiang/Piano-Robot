@@ -16,9 +16,9 @@
 			<?php echo $book['Book']['creator']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Publisher'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Edition'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $book['Book']['publisher']; ?>
+			<?php echo $book['Book']['edition']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Filename'); ?></dt>
@@ -51,12 +51,11 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
+		<li><?php echo $this->Html->link(__('Read Book', true), array('action' => 'read', $book['Book']['id'])); ?> </li>
 		<li><?php echo $this->Html->link(__('Edit Book', true), array('action' => 'edit', $book['Book']['id'])); ?> </li>
 		<li><?php echo $this->Html->link(__('Delete Book', true), array('action' => 'delete', $book['Book']['id']), null, sprintf(__('Are you sure you want to delete "%s"?', true), $book['Book']['title'])); ?> </li>
 		<li><?php echo $this->Html->link(__('List Books', true), array('action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Book', true), array('action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Scores', true), array('controller' => 'scores', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Score', true), array('controller' => 'scores', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
 <div class="related">

@@ -47,8 +47,21 @@ class Book extends AppModel {
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 	var $hasMany = array(
-		'Score' => array(
-			'className' => 'Score',
+		'Piece' => array(
+			'className' => 'Piece',
+			'foreignKey' => 'book_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		'BookMetadatum' => array(
+			'className' => 'BookMetadatum',
 			'foreignKey' => 'book_id',
 			'dependent' => false,
 			'conditions' => '',

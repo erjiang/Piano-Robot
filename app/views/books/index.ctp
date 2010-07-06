@@ -4,7 +4,7 @@
 	<tr>
 			<th><?php echo $this->Paginator->sort('title');?></th>
 			<th><?php echo $this->Paginator->sort('creator');?></th>
-			<th><?php echo $this->Paginator->sort('publisher');?></th>
+			<th><?php echo $this->Paginator->sort('edition');?></th>
 			<th><?php echo $this->Paginator->sort('length');?></th>
 			<th><?php echo $this->Paginator->sort('access');?></th>
 			<th class="actions"><?php __('Actions');?></th>
@@ -20,7 +20,7 @@
 	<tr<?php echo $class;?>>
 		<td><?php echo $book['Book']['title']; ?>&nbsp;</td>
 		<td><?php echo $book['Book']['creator']; ?>&nbsp;</td>
-		<td><?php echo $book['Book']['publisher']; ?>&nbsp;</td>
+		<td><?php echo $book['Book']['edition']; ?>&nbsp;</td>
 		<td><?php echo $book['Book']['length']; ?>&nbsp;</td>
 		<td><?php echo ($book['Book']['access'] == 1) ? "Gold" : "Open"; ?>&nbsp;</td>
 		<td class="actions">
@@ -50,7 +50,5 @@
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('New Book', true), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Scores', true), array('controller' => 'scores', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Score', true), array('controller' => 'scores', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
