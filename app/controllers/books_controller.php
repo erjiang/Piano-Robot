@@ -103,6 +103,7 @@ class BooksController extends AppController {
 			 * Some basic sanity checks on the input
 			 */
 			if($this->data['Book']['pdf']['size'] == 0) {
+				echo 'No PDF was uploaded';
 				$this->Session->setFlash(__('No PDF was uploaded', true));
 				return;
 			}
@@ -147,6 +148,7 @@ class BooksController extends AppController {
 				$this->Session->setFlash(__('The book has been saved', true));
 				$this->redirect(array('action' => 'add'));
 			} else {
+				echo 'Some kind of error';
 				$this->Session->setFlash(__('The book could not be saved. Please, try again.', true));
 			}
 		}
@@ -195,9 +197,25 @@ class BooksController extends AppController {
 	 * using identify.
 	 */
 	public function countPDF($file) {
-		$pages = $this->countPDFPHP($file);
-		return ($pages == 0) ? $this->countPDFIdentify($file) : $pages;
+		$pages = $this->countPDFMatch($file);
+		return ($pages < 2) ? $this->countPDFIdentify($file) : $pages;
 	}
+
+    public function countPDFMatch($file) {
+        $handle = fopen($file, 'r');
+        $maximum = 0;
+        while(!feof($handle)) {
+            $buffer = fgets($handle);
+            if(preg_match_all('#/Count (\d+)#', $buffer, $arr) > 0) {
+                foreach($arr[1] as $match) {
+                    if($match > $maximum) {
+                        $maximum = $match;
+                    }
+                }
+            }
+        }
+        return $maximum;
+    }
 	
 	public function countPDFIdentify($file) {
 		exec('identify '.$this->data['Book']['pdf']['tmp_name'], $output);
