@@ -25,6 +25,7 @@
 		<td><?php echo ($book['Book']['access'] == 1) ? "Gold" : "Open"; ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('Read', true), array('action' => 'read', $book['Book']['id'])); ?>
+			<?php echo $this->Html->link(__('Download', true), array('action' => 'download', $book['Book']['id'])); ?>
 			<?php echo $this->Html->link(__('Info', true), array('action' => 'view', $book['Book']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $book['Book']['id'])); ?>
 			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $book['Book']['id']), null, sprintf(__('Are you sure you want to delete "%s"?', true), $book['Book']['title'])); ?>

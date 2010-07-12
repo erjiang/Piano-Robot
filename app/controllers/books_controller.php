@@ -47,6 +47,16 @@ class BooksController extends AppController {
 		$this->set('page', $page);
 		$this->set('height', $height);
 	}
+	function download($id = null) {
+		$this->layout = 'image';
+		if (!$id) {
+			$this->Session->setFlash(__('Invalid book', true));
+			$this->redirect(array('action' => 'index'));
+			return;
+		}
+		$book =  $this->Book->read(null, $id);
+		$this->set('book', $book);
+	}
 
 	function pageheader($id = null, $page = null, $width = null, $height = null) {
 		$this->layout = 'image';
