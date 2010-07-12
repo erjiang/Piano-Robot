@@ -7,6 +7,7 @@
 		echo $this->Form->input('title');
 		echo $this->Form->input('creator');
 		echo $this->Form->input('edition');
+		echo $this->Form->input('length');
 		echo $this->Form->input('access',
 			array('type'=>'radio',
 				'default'=>1,
