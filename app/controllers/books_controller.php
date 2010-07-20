@@ -199,6 +199,31 @@ class BooksController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
+	function uncache($id = null) {
+		if (!$id) {
+			$this->Session->setFlash(__('Invalid id for book', true));
+			$this->redirect(array('action'=>'index'));
+		}
+		$book = $this->Book->read(null, $id);
+		$md5sum = $book['Book']['filename'];
+		$initial = substr($md5sum, 0, 1);
+		$cachepath = sprintf("%s/pages/%s/%s", CACHE, $initial, $md5sum);
+		$cachedir = opendir($cachepath);
+		while(false !== ($file = readdir($cachedir))) {
+			if(is_file($cachepath.'/'.$file)) {
+				unlink($cachepath.'/'.$file);
+			}
+		}
+		if(!rmdir($cachepath)) {
+			$this->Session->setFlash(__('Unclean cache deletion'), true);
+			$this->redirect(array('action'=>'index'));
+		}
+		else {
+			$this->Session->setFlash(__('Cache cleared', true));
+			$this->redirect(array('action'=>'index'));
+		}
+	}
+
 	/*
 	 * Let's not use `identify` to count PDFs because it has to
 	 * make ghostscript crunch through the whole PDF (CPU-intensive)
