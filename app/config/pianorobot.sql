@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.4
+-- version 3.3.5.1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 06, 2010 at 05:43 PM
--- Server version: 5.0.90
--- PHP Version: 5.2.8
+-- Generation Time: Aug 20, 2010 at 06:38 PM
+-- Server version: 5.1.41
+-- PHP Version: 5.3.2-1ubuntu4.2
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -16,7 +16,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `aztekera_music`
+-- Database: `music`
 --
 
 -- --------------------------------------------------------
@@ -26,18 +26,18 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 
 CREATE TABLE IF NOT EXISTS `books` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
-  `creator` varchar(255) default NULL,
-  `edition` varchar(255) default NULL,
+  `creator` varchar(255) DEFAULT NULL,
+  `edition` varchar(255) DEFAULT NULL,
   `filename` varchar(255) NOT NULL,
   `length` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
-  `access` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`),
+  `access` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
   FULLTEXT KEY `search_index` (`title`,`creator`,`edition`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 -- --------------------------------------------------------
 
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `book_metadata` (
   `key` varchar(255) NOT NULL,
   `type` enum('boolean','int','decimal','string') NOT NULL,
   `value` varchar(255) NOT NULL,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -61,16 +61,16 @@ CREATE TABLE IF NOT EXISTS `book_metadata` (
 --
 
 CREATE TABLE IF NOT EXISTS `pieces` (
-  `id` int(11) NOT NULL auto_increment,
-  `book_id` int(11) default NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `book_id` int(11) DEFAULT NULL,
   `title` varchar(255) NOT NULL,
-  `composer` varchar(255) default NULL,
+  `composer` varchar(255) DEFAULT NULL,
   `description` text,
   `length` int(11) NOT NULL,
-  `start` int(11) default NULL,
-  `created` datetime default NULL,
-  `modified` datetime default NULL,
-  PRIMARY KEY  (`id`),
+  `start` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
   FULLTEXT KEY `title` (`title`,`composer`,`description`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `piece_metadata` (
   `key` varchar(255) NOT NULL,
   `type` enum('boolean','int','decimal','string') NOT NULL,
   `value` varchar(255) NOT NULL,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -100,5 +100,22 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `key` varchar(255) NOT NULL,
   `type` enum('boolean','int','decimal','string') NOT NULL,
   `value` varchar(255) NOT NULL,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `password` varchar(40) NOT NULL COMMENT 'sha1',
+  `email` varchar(320) NOT NULL,
+  `level` tinyint(4) NOT NULL,
+  `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_active` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
