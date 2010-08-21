@@ -14,6 +14,7 @@ class UsersController extends AppController {
 			$this->Session->setFlash(__('Invalid user', true));
 			$this->redirect(array('action' => 'index'));
 		}
+		$this->UserLevel->requireUser($id);
 		$this->set('user', $this->User->read(null, $id));
 	}
 
@@ -73,6 +74,7 @@ class UsersController extends AppController {
 						 */
 						$this->Session->write('User.id', $found['User']['id']);
 						$this->Session->write('User.level', $found['User']['level']);
+						$this->Session->write('User.name', $found['User']['name']);
 
 						/*
 						 * Possibly redirect to the page the user last
