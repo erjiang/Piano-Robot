@@ -33,7 +33,6 @@ $.history.init(
 	// everything has to go through history.load in
     // order to make it available for back/forward buttons
 	function(num) {
-		console.log("called with "+num);
 		if(num) {
 			loadPage(parseInt(num));
 		} else {
@@ -79,6 +78,20 @@ function changePages() {
 	if(currentPage > 1) {
 	    window.location.hash = '#'+currentPage;
 	}
+	// preload next two pages
+	if(currentPage + 2 <= maxPage) { //check bounds
+		preloadImage("/books/page/"+id+"/"+(currentPage+2)+"/"+height);
+	}
+	if(currentPage + 3 <= maxPage) {
+		preloadImage("/books/page/"+id+"/"+(currentPage+3)+"/"+height);
+	} 
+}
+// Image preloading stuff
+var imgCache = [];
+function preloadImage(url) {
+	var cacheImage = document.createElement('img');
+	cacheImage.src = url;
+	imgCache.push(cacheImage);
 }
 
 function nextPage () {
