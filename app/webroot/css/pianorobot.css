@@ -82,6 +82,7 @@ ul, li {
 	background: #003d4c url('../img/cake.icon.png') no-repeat left;
 	color: #fff;
 	padding: 0px 30px;
+	display: inline;
 }
 #header h1 a {
 	color: #fff;
@@ -92,6 +93,20 @@ ul, li {
 #header h1 a:hover {
 	color: #fff;
 	background: #003d4c;
+	text-decoration: underline;
+}
+#header #user-info {
+	display: inline-block;
+	position: absolute;
+	margin-right: 1em;
+	right: 0;
+	top: 0.75em;
+}
+#header #user-info a {
+	color: #fff;
+	text-decoration: none;
+}
+#header #user-info a {
 	text-decoration: underline;
 }
 #content{

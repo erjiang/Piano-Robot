@@ -30,7 +30,7 @@
 
 		echo $this->Html->script('jquery');
 
-		echo $this->Html->css('cake.generic');
+		echo $this->Html->css('pianorobot');
 
 		echo $scripts_for_layout;
 	?>
@@ -39,6 +39,24 @@
 	<div id="container">
 		<div id="header">
 			<h1><?php echo $this->Html->link(__('Piano Robot: for the piano man', true), '/'); ?></h1>
+			<div id="user-info">
+				<?php if($this->Session->check('User.name')):
+						echo "Logged in as ";
+						echo $this->Html->link(
+							$this->Session->read('User.name'),
+							array(
+								'controller'=>'users',
+								'action'=>'view',
+								$this->Session->read('User.id')));
+						echo ". \n";
+						echo $this->Html->link(__('Logout',true),
+							array('controller'=>'users', 'action'=>'logout'));
+					else:
+						echo "Not logged in. \n";
+						echo $this->Html->link(__('Login', true),
+							array('controller'=>'users', 'action'=>'login'));
+					endif; ?>
+			</div>
 		</div>
 		<div id="content">
 
