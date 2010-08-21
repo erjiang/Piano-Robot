@@ -44,7 +44,39 @@ class UserLevelComponent extends Object {
         }
 
         return true;
-    }
+	}
+
+	/*
+	 * Checks to see if the user's ID is as specified,
+	 * and shows login/auth errors are necessary. Returns
+	 * true if the user passed, and false if not.
+	 */
+	function requireUser($user) {
+        // user isn't logged in!
+		if($this->Session->check('User.id') === false) {
+			$this->Session->write('Auth.redirect',
+				$this->controller->here);
+			$this->Session->setFlash($this->loginError);
+			$this->controller->redirect(array(
+				'controller'=>'users',
+                'action'=>'login'));
+			return false;
+        }
+
+		$user = $this->Session->read('User.id');
+		// access denied!
+		if($userLevel != $user) {
+			$this->Session->write('Auth.redirect',
+				$this->controller->here);
+			$this->Session->setFlash($this->authError);
+			$this->controller->redirect(array(
+				'controller'=>'users',
+				'action'=>'login'));
+			return false;
+        }
+
+        return true;
+	}
 
     /*
      * Returns the user's level if the user is logged in.
@@ -57,5 +89,17 @@ class UserLevelComponent extends Object {
         else {
             return $this->Session->read('User.level');
         }
-    }
+	}
+
+	/*
+	 * Returns the user's id, false if not logged in
+	 */
+	function getUser() {
+        if($this->Session->check('User.id') === false) {
+            return false;
+        }
+        else {
+            return $this->Session->read('User.id');
+		}
+	}
 }
