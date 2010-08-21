@@ -63,9 +63,9 @@ class UserLevelComponent extends Object {
 			return false;
         }
 
-		$user = $this->Session->read('User.id');
+		$userId = $this->Session->read('User.id');
 		// access denied!
-		if($userLevel != $user) {
+		if($userId != $user) {
 			$this->Session->write('Auth.redirect',
 				$this->controller->here);
 			$this->Session->setFlash($this->authError);
