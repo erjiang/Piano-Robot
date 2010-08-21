@@ -26,10 +26,10 @@ class UserLevelComponent extends Object {
 		if($this->Session->check('User.level') === false) {
 			$this->Session->write('Auth.redirect',
 				$this->controller->here);
+            $this->Session->setFlash($this->loginError);
 			$this->controller->redirect(array(
 				'controller'=>'users',
                 'action'=>'login'));
-            $this->Session->setFlash($this->loginError);
         }
 
 		$userLevel = $this->Session->read('User.level');
@@ -37,10 +37,10 @@ class UserLevelComponent extends Object {
 		if($userLevel < $level) {
 			$this->Session->write('Auth.redirect',
 				$this->controller->here);
+            $this->Session->setFlash($this->authError);
 			$this->controller->redirect(array(
 				'controller'=>'users',
 				'action'=>'login'));
-            $this->Session->setFlash($this->authError);
         }
 
         return true;
