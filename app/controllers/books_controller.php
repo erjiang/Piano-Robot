@@ -4,6 +4,13 @@ class BooksController extends AppController {
 	var $name = 'Books';
 	var $helpers = array('Html', 'Form');
 
+	function requireMembership() {
+		if($this->UserLevel->getLevel() < 1) {
+			$this->Session->setFlash(__('Viewing that book requires a Gold Membership.', true));
+			$this->redirect(array('controller'=>'books','action'=>'index'));
+		}
+	}
+
 	function index() {
 		$this->Book->recursive = 0;
 		$this->set('books', $this->paginate());
@@ -22,7 +29,11 @@ class BooksController extends AppController {
 			$this->Session->setFlash(__('Invalid book', true));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->set('book', $this->Book->read(null, $id));
+		$book = $this->Book->read(null, $id);
+		if((int)$book['Book']['access'] > 0) {
+			$this->requireMembership();
+		}
+		$this->set(compact('book'));
 	}
 	function page($id = null, $page = null, $height = null) {
 		$this->layout = 'image';
@@ -55,6 +66,9 @@ class BooksController extends AppController {
 			return;
 		}
 		$book =  $this->Book->read(null, $id);
+		if((int)$book['Book']['access'] > 0) {
+			$this->requireMembership();
+		}
 		$this->set('book', $book);
 	}
 
