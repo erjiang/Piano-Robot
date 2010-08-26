@@ -84,6 +84,9 @@ class BooksController extends AppController {
 	}
 
 	function add() {
+
+		$this->UserLevel->requireLevel(5);
+
 		if (!empty($this->data)) {
 			/*
 			 * Array
@@ -165,6 +168,9 @@ class BooksController extends AppController {
 	}
 
 	function edit($id = null) {
+
+		$this->UserLevel->requireLevel(5);
+
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid book', true));
 			$this->redirect(array('action' => 'index'));
@@ -183,6 +189,9 @@ class BooksController extends AppController {
 	}
 
 	function delete($id = null) {
+
+		$this->UserLevel->requireLevel(5);
+
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for book', true));
 			$this->redirect(array('action'=>'index'));
@@ -200,6 +209,9 @@ class BooksController extends AppController {
 	}
 
 	function uncache($id = null) {
+
+		$this->UserLevel->requireLevel(1);
+
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for book', true));
 			$this->redirect(array('action'=>'index'));
