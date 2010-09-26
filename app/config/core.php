@@ -329,6 +329,4 @@
 	Configure::write('External.ghostscript', 'gs');
 	Configure::write('External.convert', 'convert');
 
-if(file_exists('custom_config.php')) {
 	require_once('custom_config.php');
-}
