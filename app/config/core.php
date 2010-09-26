@@ -321,3 +321,14 @@
 	// note that this DPI controls how GhostScript renders the PDF,
 	// not the final size of the rasterized image
 	Configure::write('PDFDisplay.dpi', 300);
+
+/**
+ * Settings to configure the paths for external executibles
+ */
+
+	Configure::write('External.ghostscript', 'gs');
+	Configure::write('External.convert', 'convert');
+
+if(file_exists('custom_config.php')) {
+	require_once('custom_config.php');
+}
