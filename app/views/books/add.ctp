@@ -20,6 +20,7 @@ $(document).ready(function () {
 			return;
 		}
 		filename = filename.substring(0, filename.length - 4);
+		filename = filename.split("_").join(" "); // no underscores
 		if(filename.indexOf(' - ') == -1) {
 			$("#BookTitle").val(filename);
 		} else {
