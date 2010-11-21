@@ -11,6 +11,10 @@ $this->Html->script('jquery.history.js', false);
 
 ?>
 <div id="topbar">
+<div id="topbar-left">
+<?php echo $html->link('Back to books',
+    array('controller'=>'books')); ?>
+</div>
 <form id="pageForm">
 <input type="button" id="prevPage" value="<<" />
 <input type="text" id="pageNumber" />
@@ -142,22 +146,22 @@ $(document).ready(function () {
 });
 
 $(document).keydown(function (e) {
-	switch (e.keyCode) {
-		case 40:
-			alert('down');
-			break;
-		case 38:
-			alert('up');
-			break;
-		case 37: // right arrow
-		case 34: // page down
-			nextPage();
-			break;
-		case 39: // left arrow
-		case 33: // page up
-			prevPage();
-			break;
-		default:
-	}
+    if(!e.altKey) {
+        switch (e.keyCode) {
+            case 40:
+                break;
+            case 38:
+                break;
+            case 39: // right arrow
+            case 34: // page down
+                nextPage();
+                break;
+            case 37: // left arrow
+            case 33: // page up
+                prevPage();
+                break;
+            default:
+        }
+    }
 });
 </script>
