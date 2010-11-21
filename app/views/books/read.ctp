@@ -18,10 +18,8 @@ $this->Html->script('jquery.history.js', false);
 <input type="button" id="nextPage" value=">>" />
 </form>
 </div>
-<div id="pages">
-<img id="left" class="books page" />
-
-<img id="right" class="books page" />
+<div id="pages" style="white-space:nowrap">
+<img id="left" class="books page" /><img id="right" class="books page" />
 </div>
 <script type="text/javascript">
 
@@ -144,10 +142,10 @@ $(document).ready(function () {
 $(document).keydown(function (e) {
 	switch (e.keyCode) {
 		case 40:
-			alert('down');
+			//alert('down');
 			break;
 		case 38:
-			alert('up');
+			//alert('up');
 			break;
 		case 37: // right arrow
 		case 34: // page down
