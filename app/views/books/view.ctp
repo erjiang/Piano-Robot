@@ -47,6 +47,13 @@
 			&nbsp;
 		</dd>
 	</dl>
+	<img style="border:1px solid black"
+        src="/books/page/<?php echo $book['Book']['id']; ?>/1/200" />
+<?php   // avoid printing seciond page if book is length 1
+        if($book['Book']['length'] > 1): ?>
+	<img style="border:1px solid black"
+        src="/books/page/<?php echo $book['Book']['id']; ?>/2/200" />
+<?php endif; ?>
 </div>
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>

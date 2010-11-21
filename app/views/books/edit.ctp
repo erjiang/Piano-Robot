@@ -18,9 +18,12 @@
 	</fieldset>
 <?php echo $this->Form->end(__('Submit', true));?>
 	<img style="border:1px solid black"
-		src="/books/page/<?php echo $this->Form->value('Book.id'); ?>/1/200" />
+        src="/books/page/<?php echo $this->Form->value('Book.id'); ?>/1/200" />
+<?php   // avoid printing seciond page if book is length 1
+        if($this->Form->value('Book.length') > 1): ?>
 	<img style="border:1px solid black"
-		src="/books/page/<?php echo $this->Form->value('Book.id'); ?>/2/200" />
+        src="/books/page/<?php echo $this->Form->value('Book.id'); ?>/2/200" />
+<?php endif; ?>
 </div>
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>

@@ -6,9 +6,14 @@ body, #container {
 	width: 100%;
 	margin:0;
 	overflow:hidden;
+    font-family: Ubuntu, sans-serif;
+    color: white;
 }
 body {
 	background-color:black;
+}
+a {
+    color: #b00;
 }
 #content {
 	text-align: center;
@@ -16,6 +21,16 @@ body {
 }
 #content #pageNumber {
 	width: 3em;
+}
+#content #topbar {
+    width: 100%;
+}
+#content #topbar-left {
+    display: inline;
+    float: left;
+}
+#content form {
+    display: inline;
 }
 img.page {
 	border:5px solid white;

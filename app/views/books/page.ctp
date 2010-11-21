@@ -2,6 +2,8 @@
 date_default_timezone_set('UTC');
 header('Expires: '.date('r', time() + 600));
 
+define('GHOSTSCRIPT', Configure::read('External.ghostscript'));
+
 $md5sum = $book['Book']['filename'];
 $initial = substr($md5sum, 0, 1);
 $pdfpath = sprintf("%s%s/%s.pdf", PDF_STORE, $initial, $md5sum);
@@ -25,12 +27,12 @@ if(!is_file($imagename)) {
 
     ignore_user_abort(true); // don't stop processing the page
 
-    exec(sprintf('gs -dQUIET -dBATCH -dSAFER -dNOPAUSE -dNOPROMPT ' .
+    exec(sprintf(GHOSTSCRIPT.' -dQUIET -dBATCH -dSAFER -dNOPAUSE -dNOPROMPT ' .
             '-r%d -sDEVICE=pnggray -dAlignToPixels=0 -dGridFitTT=0 ' .
             '-dGraphicsAlphaBits=2 -dTextAlphaBits=4 -dUseCropBox ' .
             '-dFirstPage=%d -dLastPage=%d -sOutputFile=- "%s" | ' .
-            'convert png:- -filter catrom -resize %dx%d -type Grayscale ' .
-            '"%s"',
+            'convert png:- -filter catrom -trim -resize %dx%d ' .
+            '-type Grayscale "%s"',
 		Configure::read('PDFDisplay.dpi'),
 		$page, $page,
 		$pdfpath,

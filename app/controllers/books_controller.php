@@ -35,6 +35,18 @@ class BooksController extends AppController {
 		}
 		$this->set(compact('book'));
 	}
+	function kindle($id = null) {
+		$this->layout = 'reading';
+		if(!$id) {
+			$this->Session->setFlash(__('Invalid book', true));
+			$this->redirect(array('action' => 'index'));
+		}
+		$book = $this->Book->read(null, $id);
+		if((int)$book['Book']['access'] > 0) {
+			$this->requireMembership();
+		}
+		$this->set(compact('book'));
+	}
 	function page($id = null, $page = null, $height = null) {
 		$this->layout = 'image';
 		if (!$id) {

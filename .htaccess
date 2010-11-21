@@ -1,5 +1,8 @@
 <IfModule mod_rewrite.c>
    RewriteEngine on
+   # prevent this dir from masking aztekera.com/music
+   RewriteCond    %{HTTP_HOST} aztekera [NC]
+   RewriteRule    (.*) ../aztekera/music/$1 [L]
    RewriteRule    ^$ app/webroot/    [L]
    RewriteRule    (.*) app/webroot/$1 [L]
 </IfModule>
